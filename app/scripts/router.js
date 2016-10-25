@@ -7,20 +7,27 @@ var ReactDOM = require('react-dom');
 // Local imports
 var AppComponent = require('./components/index.jsx').AppComponent;
 var UsernameFormComponent = require('./components/index.jsx').UsernameFormComponent;
-var userModel = require('./models/user.js').User;
+var UserModel = require('./models/user.js').User;
+var currentUser;
 
 var AppRouter = Backbone.Router.extend({
   initialize: function(){
-    var currentUser = new userModel();
-    console.log(currentUser);
+    this.currentUser = new UserModel();
+    this.currentUser.set({username: 'lonate12'});
+        // console.log(currentUser);
+
   },
   routes: {
     '': 'index',
     'message-view/': 'viewMessages'
   },
   index: function(){
+    // ReactDOM.render(
+    //   React.createElement(AppComponent),
+    //   document.getElementById('app')
+    // );
     ReactDOM.render(
-      React.createElement(UsernameFormComponent),
+      React.createElement(UsernameFormComponent, {currentUser: this.currentUser}),
       document.getElementById('app')
     );
   },
@@ -34,4 +41,9 @@ var AppRouter = Backbone.Router.extend({
 
 var router = new AppRouter();
 
-module.exports = router;
+console.log(currentUser);
+
+module.exports = {
+  router: router,
+  currentUser: currentUser
+};

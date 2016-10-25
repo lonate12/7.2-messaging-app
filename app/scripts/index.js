@@ -1,4 +1,4 @@
 var Backbone = require('backbone');
-require('./router.js');
+require('./router.js').router;
 
 Backbone.history.start();

@@ -4,8 +4,25 @@ var ReactDOM = require('react-dom');
 
 var Message = require('../models/message.js').Message;
 var MessageCollection = require('../models/message.js').MessageCollection;
+var currentUser = require('../router.js').currentUser;
 
 var AppComponent = React.createClass({
+  getInitialState: function(){
+    var self = this;
+    var messageBoard = new MessageCollection();
+
+    messageBoard.fetch().then(function(){
+      self.setState({collection: messageBoard})
+    });
+
+    return {
+      collection: messageBoard
+    };
+  },
+  addMessage: function(messageModel){
+    this.state.collection.create(messageModel);
+    this.setState({collection: this.state.collection});
+  },
   render: function(){
     return(
       <div className="container">
@@ -50,13 +67,31 @@ var MessageComponent = React.createClass({
 });
 
 var InputComponent = React.createClass({
+  getInitialState: function(){
+    return {
+      content: this.props.model.get('content')
+    };
+  },
+  handleSubmit: function(e){
+    e.preventDefault();
+    var currentTime = new Date();
+    /* var newMessage = {
+      username: this.state.username,
+      content: this.state.content,
+      user_avatar: this.state.user_avatar,
+      time: currentTime.getHours() + ':' + currentTime.getMinutes()
+    }; */
+    this.props.addMessage(newMessage);
+
+    this.setState({content: ''});
+  },
   render: function(){
     return(
       <form className="form-inline">
         <div className="form-group">
-          <input type="text" className="form-control" name="message-input" id="message-input" placeholder="Your message here..." />
+          <input type="text" className="form-control" value={this.state.content} name="message-input" id="message-input" placeholder="Your message here..." />
         </div>
-        <button type="submit" className="btn btn-success">Post Message</button>
+        <button type="submit" onClick={this.handleSubmit} className="btn btn-success">Post Message</button>
       </form>
     );
   }
@@ -64,6 +99,7 @@ var InputComponent = React.createClass({
 
 var UsernameFormComponent = React.createClass({
   render: function(){
+        console.log({currentUser});
     return(
       <form className="form-inline col-md-6 col-md-offset-3">
         <div className="form-group">
