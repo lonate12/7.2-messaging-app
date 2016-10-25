@@ -62,6 +62,20 @@ var InputComponent = React.createClass({
   }
 });
 
+var UsernameFormComponent = React.createClass({
+  render: function(){
+    return(
+      <form className="form-inline col-md-6 col-md-offset-3">
+        <div className="form-group">
+          <input type="text" className="form-control" name="username" id="username-input" placeholer="myCoolUsername" />
+        </div>
+        <button type="submit" className="btn btn-success">Begin messaging</button>
+      </form>
+    );
+  }
+});
+
 module.exports = {
-  AppComponent: AppComponent
+  AppComponent: AppComponent,
+  UsernameFormComponent: UsernameFormComponent
 };
