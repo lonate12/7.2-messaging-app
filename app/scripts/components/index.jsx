@@ -123,12 +123,14 @@ var UsernameFormComponent = React.createClass({
     e.preventDefault();
     var inputData = e.target.value;
     this.setState({username: inputData});
+    console.log(this.state.username);
   },
   updateCurrentUser: function(e){
     e.preventDefault();
 
     var currentUserName = this.state.username;
     this.props.currentUser.set({username: currentUserName});
+    console.log(this.props.currentUser);
   },
   render: function(){
     return(

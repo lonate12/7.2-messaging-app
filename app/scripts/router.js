@@ -13,7 +13,7 @@ var currentUser;
 var AppRouter = Backbone.Router.extend({
   initialize: function(){
     this.currentUser = new UserModel();
-    this.currentUser.set({username: 'lonate12'});
+    // this.currentUser.set({username: 'lonate12'});
   },
   routes: {
     '': 'index',
