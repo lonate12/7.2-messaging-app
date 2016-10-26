@@ -14,18 +14,12 @@ var AppRouter = Backbone.Router.extend({
   initialize: function(){
     this.currentUser = new UserModel();
     this.currentUser.set({username: 'lonate12'});
-        // console.log(currentUser);
-
   },
   routes: {
     '': 'index',
     'message-view/': 'viewMessages'
   },
   index: function(){
-    // ReactDOM.render(
-    //   React.createElement(AppComponent),
-    //   document.getElementById('app')
-    // );
     ReactDOM.render(
       React.createElement(UsernameFormComponent, {currentUser: this.currentUser}),
       document.getElementById('app')
@@ -33,15 +27,13 @@ var AppRouter = Backbone.Router.extend({
   },
   viewMessages: function(){
     ReactDOM.render(
-      React.createElement(AppComponent),
+      React.createElement(AppComponent, {currentUser: this.currentUser}),
       document.getElementById('app')
     );
   }
 });
 
 var router = new AppRouter();
-
-console.log(currentUser);
 
 module.exports = {
   router: router,

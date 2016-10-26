@@ -11,6 +11,7 @@ var AppComponent = React.createClass({
     var self = this;
     var messageBoard = new MessageCollection();
 
+
     messageBoard.fetch().then(function(){
       self.setState({collection: messageBoard})
     });
@@ -24,6 +25,15 @@ var AppComponent = React.createClass({
     this.setState({collection: this.state.collection});
   },
   render: function(){
+    var messageList = this.state.collection.map(function(message){
+      return (
+        <InputComponent
+          key={message.get('_id')}
+          model={message}
+        />
+      );
+    });
+
     return(
       <div className="container">
         <div className="row">
@@ -33,7 +43,7 @@ var AppComponent = React.createClass({
               <MessageComponent />
             </div>
             <div className="message-input">
-              <InputComponent />
+              <InputComponent model={this.state.newMessage} username={this.props.currentUser.get('username')}/>
             </div>
           </div>
         </div>
@@ -69,44 +79,64 @@ var MessageComponent = React.createClass({
 var InputComponent = React.createClass({
   getInitialState: function(){
     return {
-      content: this.props.model.get('content')
+      content: ''
     };
   },
   handleSubmit: function(e){
     e.preventDefault();
     var currentTime = new Date();
-    /* var newMessage = {
-      username: this.state.username,
+      var newMessage = {
+      username: this.props.username,
       content: this.state.content,
       user_avatar: this.state.user_avatar,
       time: currentTime.getHours() + ':' + currentTime.getMinutes()
-    }; */
-    this.props.addMessage(newMessage);
+    };
+
+    /* this.props.addMessage(newMessage); */
 
     this.setState({content: ''});
   },
   render: function(){
     return(
-      <form className="form-inline">
+      <form className="form-inline" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <input type="text" className="form-control" value={this.state.content} name="message-input" id="message-input" placeholder="Your message here..." />
         </div>
-        <button type="submit" onClick={this.handleSubmit} className="btn btn-success">Post Message</button>
+        <button type="submit" className="btn btn-success">Post Message</button>
       </form>
     );
   }
 });
 
 var UsernameFormComponent = React.createClass({
+  getInitialState: function(){
+    return {
+      username: ''
+    };
+  },
+  handleChange: function(e){
+    e.preventDefault();
+    var inputData = e.target.value;
+    this.setState({username: inputData});
+  },
+  updateCurrentUser: function(e){
+    e.preventDefault();
+
+    var currentUserName = this.state.username;
+    this.props.currentUser.set({username: currentUserName});
+  },
   render: function(){
-        console.log({currentUser});
     return(
-      <form className="form-inline col-md-6 col-md-offset-3">
-        <div className="form-group">
-          <input type="text" className="form-control" name="username" id="username-input" placeholer="myCoolUsername" />
+      <div className="container">
+        <div className="row">
+          <form className="form-inline col-md-6 col-md-offset-3" onSubmit={this.updateCurrentUser}>
+            <div className="form-group">
+              <input type="text" onChange={this.handleChange} className="form-control" name="username" id="username-input" placeholder="myCoolUsername" />
+            </div>
+            <button type="submit" className="btn btn-success">Begin messaging</button>
+          </form>
         </div>
-        <button type="submit" className="btn btn-success">Begin messaging</button>
-      </form>
+      </div>
     );
   }
 });
