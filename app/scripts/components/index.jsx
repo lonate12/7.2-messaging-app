@@ -12,10 +12,11 @@ var AppComponent = React.createClass({
     var self = this;
     var messageBoard = new MessageCollection();
     alert(messageBoard);
-
+    setInterval(function(){
     messageBoard.fetch().then(function(){
       self.setState({collection: messageBoard})
     });
+  },2000)
 
     return {
       collection: messageBoard
@@ -26,6 +27,17 @@ var AppComponent = React.createClass({
     this.state.collection.sort();
     this.setState({collection: this.state.collection});
   },
+  // componentDidMount: function(){
+  //   var self = this;
+  //   var collection = this.state.collection;
+  //   console.warn(self);
+  //   setInterval(function(){
+  //     self.state.collection.fetch();
+  //   },2000);
+  //   console.log('timeout',self);
+  // },
+
+
   render: function(){
     /* var currentCollection = this.state.collection;
     var reversedCollection = currentCollection.comparator(function(message){
