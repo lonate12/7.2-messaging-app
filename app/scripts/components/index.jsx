@@ -1,6 +1,7 @@
 var $ = require('jquery');
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Backbone = require('backbone');
 
 var Message = require('../models/message.js').Message;
 var MessageCollection = require('../models/message.js').MessageCollection;
@@ -131,6 +132,7 @@ var UsernameFormComponent = React.createClass({
     var currentUserName = this.state.username;
     this.props.currentUser.set({username: currentUserName});
     console.log(this.props.currentUser);
+    Backbone.history.navigate('message-view/', {trigger:true});
   },
   render: function(){
     return(
