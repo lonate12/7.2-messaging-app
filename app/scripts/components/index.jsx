@@ -11,7 +11,7 @@ var AppComponent = React.createClass({
   getInitialState: function(){
     var self = this;
     var messageBoard = new MessageCollection();
-
+    alert(messageBoard);
 
     messageBoard.fetch().then(function(){
       self.setState({collection: messageBoard})
@@ -23,9 +23,15 @@ var AppComponent = React.createClass({
   },
   addMessage: function(messageModel){
     this.state.collection.create(messageModel);
+    this.state.collection.sort();
     this.setState({collection: this.state.collection});
   },
   render: function(){
+    /* var currentCollection = this.state.collection;
+    var reversedCollection = currentCollection.comparator(function(message){
+      return -message.get('time');
+    });
+    console.warn(reversedCollection); */
     var messageList = this.state.collection.map(function(message){
       return (
         <MessageComponent
@@ -38,13 +44,17 @@ var AppComponent = React.createClass({
     return(
       <div className="container">
         <div className="row">
-          <UserInfoComponent />
+          <UserInfoComponent username={this.props.currentUser.get('username')}/>
           <div className="col-md-9 message-container">
             <div className="row messages-window">
               {messageList}
             </div>
             <div className="message-input">
-              <InputComponent model={this.state.newMessage} username={this.props.currentUser.get('username')}/>
+              <InputComponent
+                collection={this.state.collection}
+                username={this.props.currentUser.get('username')}
+                addMessage={this.addMessage}
+              />
             </div>
           </div>
         </div>
@@ -57,8 +67,8 @@ var UserInfoComponent = React.createClass({
   render: function(){
     return(
       <div className="col-md-3 user-info-container">
-        <img src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.0-9/10258884_692431914150232_1608469162711838332_n.jpg?oh=5944c50a2c6b944d502dbba0317212ad&oe=588EE2CD" alt="..." />
-        <p className="username-main">lonate12</p>
+        <img src="..." alt="..." />
+        <p className="username-main">{this.props.username}</p>
       </div>
     );
   }
@@ -88,19 +98,19 @@ var InputComponent = React.createClass({
     e.preventDefault();
     var currentTime = new Date();
     var newMessage = {
-    username: this.props.username,
     content: this.state.content,
-    /* user_avatar: this.state.user_avatar,*/
-    time: currentTime.getHours() + ':' + currentTime.getMinutes()
+    username: this.props.username,
+    user_avatar: null,
+    time: currentTime.getTime()
     };
 
-    /* this.props.addMessage(newMessage); */
-    console.log(newMessage);
+    this.props.addMessage(newMessage);
+
+    this.setState({content: ''});
   },
   handleContent: function(e){
     var contentValue = e.target.value;
     this.setState({content: contentValue});
-    console.log(this.state.content);
   },
   render: function(){
     return(
