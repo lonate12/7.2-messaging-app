@@ -85,22 +85,26 @@ var InputComponent = React.createClass({
   handleSubmit: function(e){
     e.preventDefault();
     var currentTime = new Date();
-      var newMessage = {
-      username: this.props.username,
-      content: this.state.content,
-      user_avatar: this.state.user_avatar,
-      time: currentTime.getHours() + ':' + currentTime.getMinutes()
+    var newMessage = {
+    username: this.props.username,
+    content: this.state.content,
+    user_avatar: this.state.user_avatar,
+    time: currentTime.getHours() + ':' + currentTime.getMinutes()
     };
 
     /* this.props.addMessage(newMessage); */
-
-    this.setState({content: ''});
+    console.log(newMessage);
+  },
+  handleContent: function(e){
+    var contentValue = e.target.value;
+    this.setState({content: contentValue});
+    console.log(this.state.content);
   },
   render: function(){
     return(
       <form className="form-inline" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <input type="text" className="form-control" value={this.state.content} name="message-input" id="message-input" placeholder="Your message here..." />
+          <input onChange={this.handleContent} type="text" className="form-control" value={this.state.content} name="message-input" id="message-input" placeholder="Your message here..." />
         </div>
         <button type="submit" className="btn btn-success">Post Message</button>
       </form>
