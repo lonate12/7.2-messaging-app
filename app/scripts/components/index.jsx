@@ -27,7 +27,7 @@ var AppComponent = React.createClass({
   render: function(){
     var messageList = this.state.collection.map(function(message){
       return (
-        <InputComponent
+        <MessageComponent
           key={message.get('_id')}
           model={message}
         />
@@ -40,7 +40,7 @@ var AppComponent = React.createClass({
           <UserInfoComponent />
           <div className="col-md-9 message-container">
             <div className="row messages-window">
-              <MessageComponent />
+              {messageList}
             </div>
             <div className="message-input">
               <InputComponent model={this.state.newMessage} username={this.props.currentUser.get('username')}/>
@@ -65,12 +65,13 @@ var UserInfoComponent = React.createClass({
 
 var MessageComponent = React.createClass({
   render: function(){
+    console.log(this.props);
     return(
       <div className="message">
-        <img src="..." alt="..." />
-        <span className="username-message">dantheman</span>
-        <span className="time-stamp">5:30 PM</span>
-        <p className="message-content">This is a message that Dan sent</p>
+        <img src={this.props.model.get('user_avatar')} alt="..." />
+        <span className="username-message">{this.props.model.get('username')}</span>
+        <span className="time-stamp">{this.props.model.get('time')}</span>
+        <p className="message-content">{this.props.model.get('content')}</p>
       </div>
     );
   }
@@ -88,7 +89,7 @@ var InputComponent = React.createClass({
     var newMessage = {
     username: this.props.username,
     content: this.state.content,
-    user_avatar: this.state.user_avatar,
+    /* user_avatar: this.state.user_avatar,*/
     time: currentTime.getHours() + ':' + currentTime.getMinutes()
     };
 
