@@ -67,7 +67,7 @@ var UserInfoComponent = React.createClass({
   render: function(){
     return(
       <div className="col-md-3 user-info-container">
-        <img src="http://unsplash.it/250/250" alt="..." className="user-avatar"/>
+        <img src="https://unsplash.it/250/250" alt="..." className="user-avatar"/>
         <p className="username-main">{this.props.username}</p>
       </div>
     );
