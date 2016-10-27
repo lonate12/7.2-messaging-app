@@ -11,12 +11,11 @@ var AppComponent = React.createClass({
   getInitialState: function(){
     var self = this;
     var messageBoard = new MessageCollection();
-    alert(messageBoard);
     setInterval(function(){
     messageBoard.fetch().then(function(){
       self.setState({collection: messageBoard})
     });
-  },2000)
+  },30000)
 
     return {
       collection: messageBoard
@@ -39,11 +38,6 @@ var AppComponent = React.createClass({
 
 
   render: function(){
-    /* var currentCollection = this.state.collection;
-    var reversedCollection = currentCollection.comparator(function(message){
-      return -message.get('time');
-    });
-    console.warn(reversedCollection); */
     var messageList = this.state.collection.map(function(message){
       return (
         <MessageComponent
@@ -128,11 +122,14 @@ var InputComponent = React.createClass({
     return(
       <form className="form-inline" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <input onChange={this.handleContent} type="text" className="form-control" value={this.state.content} name="message-input" id="message-input" placeholder="Your message here..." />
+          <input onChange={this.handleContent} ref="message" type="text" className="form-control" value={this.state.content} name="message-input" id="message-input" placeholder="Your message here..." />
         </div>
         <button type="submit" className="btn btn-success">Post Message</button>
       </form>
     );
+  },
+  componentDidMount: function(){
+    this.refs.message.focus();
   }
 });
 
@@ -162,13 +159,16 @@ var UsernameFormComponent = React.createClass({
         <div className="row">
           <form className="form-inline col-md-6 col-md-offset-3" onSubmit={this.updateCurrentUser}>
             <div className="form-group">
-              <input type="text" onChange={this.handleChange} className="form-control" name="username" id="username-input" placeholder="myCoolUsername" />
+              <input type="text" onChange={this.handleChange} ref="username" className="form-control" name="username" id="username-input" placeholder="myCoolUsername" required="required"/>
             </div>
             <button type="submit" className="btn btn-success">Begin messaging</button>
           </form>
         </div>
       </div>
     );
+  },
+  componentDidMount: function(){
+    this.refs.username.focus();
   }
 });
 
