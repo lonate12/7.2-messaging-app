@@ -5,6 +5,23 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 // Import Bootstrap
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
+// Color Palette
+$darkRed:  #740001;
+$red: #AE0001;
+$yellow: #EEBA30;
+$darkYellow: #D3A625;
+$black: #000000;
+$grey: #777;
+
+@font-face {
+  font-family: 'lumos';
+  src: url('../fonts/lumos.ttf');
+}
+
+@font-face {
+  font-family: 'harry';
+  src: url('../fonts/ParryHotter.ttf')
+}
 
 *,
 *::before,
@@ -14,4 +31,47 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
 img {
   max-width: 100%;
+}
+
+body{
+  background-image: url('../images/main-bg.jpg');
+  background-size: cover;
+}
+
+.main-header{
+  text-align: center;
+  margin-top: 100px;
+  font-family: 'harry';
+  color: $yellow;
+  text-shadow:
+    -3px -3px 0 $darkRed,
+    3px -3px 0 $darkRed,
+    -3px 3px 0 $darkRed,
+    3px 3px 0 $darkRed;
+  font-size: 75px;
+}
+
+.username-login-container{
+  width: 100%;
+  margin-top: 100px;
+
+  #username-input{
+    width: 100%;
+    margin-bottom: 15px;
+    background-color: lighten($yellow, 30%);
+  }
+
+  button{
+    display: block;
+    margin-left: auto;
+    background-color: $red;
+    border: 1px solid $darkRed;
+    color: white;
+
+  }
+  button:hover{
+    background-color: $darkRed;
+    border: 1px solid darken($darkRed, 10%);
+    color: white;
+  }
 }

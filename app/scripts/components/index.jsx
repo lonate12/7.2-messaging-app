@@ -157,11 +157,12 @@ var UsernameFormComponent = React.createClass({
     return(
       <div className="container">
         <div className="row">
+          <h1 className="col-md-12 main-header">Zugzwang</h1>
           <form className="form-inline col-md-6 col-md-offset-3" onSubmit={this.updateCurrentUser}>
-            <div className="form-group">
+            <div className="form-group username-login-container">
               <input type="text" onChange={this.handleChange} ref="username" className="form-control" name="username" id="username-input" placeholder="myCoolUsername" required="required"/>
+              <button type="submit" className="btn btn-success">Begin messaging</button>
             </div>
-            <button type="submit" className="btn btn-success">Begin messaging</button>
           </form>
         </div>
       </div>
