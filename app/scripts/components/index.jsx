@@ -95,7 +95,7 @@ var MessageComponent = React.createClass({
 
     return(
       <div className={(me == thisUser) ? 'message me' : 'message'}>
-        <img src={this.props.model.get('user_avatar') ? this.props.model.get('user_avatar'): 'http://unsplash.it/30/30'} alt="..." className="message-avatar" />
+        <img src={this.props.model.get('user_avatar') ? this.props.model.get('user_avatar'): 'https://unsplash.it/30/30'} alt="..." className="message-avatar" />
         <span className="message-username">{this.props.model.get('username') ? this.props.model.get('username') : 'Anonymous'}</span>
         <span className="message-time-stamp">{formattedTime}</span>
         <p className="message-content">{this.props.model.get('content')}</p>
