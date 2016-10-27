@@ -11,11 +11,17 @@ var AppComponent = React.createClass({
   getInitialState: function(){
     var self = this;
     var messageBoard = new MessageCollection();
-    setInterval(function(){
+
     messageBoard.fetch().then(function(){
-      self.setState({collection: messageBoard})
+      self.setState({collection: messageBoard});
+
+      setInterval(function(){
+        messageBoard.fetch().then(function(){
+          self.setState({collection: messageBoard})
+        });
+      },30000);
     });
-  },30000)
+
 
     return {
       collection: messageBoard
@@ -160,7 +166,7 @@ var UsernameFormComponent = React.createClass({
           <h1 className="col-md-12 main-header">Zugzwang</h1>
           <form className="form-inline col-md-6 col-md-offset-3" onSubmit={this.updateCurrentUser}>
             <div className="form-group username-login-container">
-              <input type="text" onChange={this.handleChange} ref="username" className="form-control" name="username" id="username-input" placeholder="myCoolUsername" required="required"/>
+              <input type="text" onChange={this.handleChange} ref="username" className="form-control" name="username" id="username-input" placeholder="Enter your username" required="required"/>
               <button type="submit" className="btn btn-success">Begin messaging</button>
             </div>
           </form>

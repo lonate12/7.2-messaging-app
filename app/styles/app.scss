@@ -15,12 +15,17 @@ $grey: #777;
 
 @font-face {
   font-family: 'lumos';
-  src: url('../fonts/lumos.ttf');
+  src: url('../fonts/Lumos.ttf');
 }
 
 @font-face {
   font-family: 'harry';
   src: url('../fonts/ParryHotter.ttf')
+}
+
+@font-face {
+  font-family: 'champagne';
+  src: url('../fonts/Champagne & Limousines.ttf')
 }
 
 *,
@@ -36,6 +41,10 @@ img {
 body{
   background-image: url('../images/main-bg.jpg');
   background-size: cover;
+}
+
+.form-control{
+  font-family: 'champagne';
 }
 
 .main-header{
@@ -67,6 +76,7 @@ body{
     background-color: $red;
     border: 1px solid $darkRed;
     color: white;
+    font-family: 'lumos';
 
   }
   button:hover{
