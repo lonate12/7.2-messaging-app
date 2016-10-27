@@ -43,8 +43,22 @@ body{
   background-size: cover;
 }
 
-.form-control{
+.form-control, .btn{
   font-family: 'champagne';
+}
+
+.btn{
+  display: block;
+  margin-left: auto;
+  background-color: $red;
+  border: 1px solid $darkRed;
+  color: white;
+}
+
+.btn:hover{
+  background-color: $darkRed;
+  border: 1px solid darken($darkRed, 10%);
+  color: white;
 }
 
 .main-header{
@@ -70,18 +84,17 @@ body{
     background-color: lighten($yellow, 30%);
   }
 
-  button{
-    display: block;
-    margin-left: auto;
-    background-color: $red;
-    border: 1px solid $darkRed;
-    color: white;
-    font-family: 'lumos';
+  // button:hover{
+  //   background-color: $darkRed;
+  //   border: 1px solid darken($darkRed, 10%);
+  //   color: white;
+  // }
+}
 
-  }
-  button:hover{
-    background-color: $darkRed;
-    border: 1px solid darken($darkRed, 10%);
-    color: white;
-  }
+.user-info-container{
+  height: 100%;
+}
+
+.message-container{
+  background-color: rgba(250, 233, 189, .2)
 }
