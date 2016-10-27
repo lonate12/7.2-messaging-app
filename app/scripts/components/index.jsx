@@ -22,7 +22,6 @@ var AppComponent = React.createClass({
       },30000);
     });
 
-
     return {
       collection: messageBoard
     };
@@ -32,17 +31,6 @@ var AppComponent = React.createClass({
     this.state.collection.sort();
     this.setState({collection: this.state.collection});
   },
-  // componentDidMount: function(){
-  //   var self = this;
-  //   var collection = this.state.collection;
-  //   console.warn(self);
-  //   setInterval(function(){
-  //     self.state.collection.fetch();
-  //   },2000);
-  //   console.log('timeout',self);
-  // },
-
-
   render: function(){
     var messageList = this.state.collection.map(function(message){
       return (
@@ -79,7 +67,7 @@ var UserInfoComponent = React.createClass({
   render: function(){
     return(
       <div className="col-md-3 user-info-container">
-        <img src="..." alt="..." />
+        <img src="http://unsplash.it/250/250" alt="..." className="user-avatar"/>
         <p className="username-main">{this.props.username}</p>
       </div>
     );

@@ -93,6 +93,23 @@ body{
 
 .user-info-container{
   height: 100%;
+  .user-avatar{
+    display: block;
+    height: 250px;
+    margin-top: 15px;
+    border-radius: 8px;
+    
+  }
+  .username-main{
+    font-family: 'harry';
+    font-size: 40px;
+    color: $darkRed;
+    text-shadow:
+    -1px -1px 0 $yellow,
+    1px -1px 0 $yellow,
+    -1px 1px 0 $yellow,
+    1px 1px 0 $yellow;
+  }
 }
 
 .message-container{
