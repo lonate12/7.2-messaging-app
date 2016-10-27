@@ -56,7 +56,7 @@ var AppComponent = React.createClass({
     return(
       <div className="container">
         <div className="row">
-          <UserInfoComponent username={this.props.currentUser.get('username')}/>
+          <UserInfoComponent username={/*this.props.currentUser.get('username')*/sessionStorage.getItem('username')}/>
           <div className="col-md-9 message-container">
             <div className="row messages-window">
               {messageList}
@@ -64,7 +64,7 @@ var AppComponent = React.createClass({
             <div className="message-input">
               <InputComponent
                 collection={this.state.collection}
-                username={this.props.currentUser.get('username')}
+                username={/*this.props.currentUser.get('username')*/sessionStorage.getItem('username')}
                 addMessage={this.addMessage}
               />
             </div>
@@ -87,13 +87,29 @@ var UserInfoComponent = React.createClass({
 });
 
 var MessageComponent = React.createClass({
+  msToTime: function(duration) {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes;
+  },
   render: function(){
-    console.log(this.props);
+    var timeInMS = this.props.model.get('time');
+    var formattedTime = this.msToTime(timeInMS);
+    var me = sessionStorage.getItem('username');
+    var thisUser = this.props.model.get('username');
+
     return(
-      <div className="message">
-        <img src={this.props.model.get('user_avatar')} alt="..." />
-        <span className="username-message">{this.props.model.get('username')}</span>
-        <span className="time-stamp">{this.props.model.get('time')}</span>
+      <div className={(me == thisUser) ? 'message me' : 'message'}>
+        <img src={this.props.model.get('user_avatar') ? this.props.model.get('user_avatar'): 'http://unsplash.it/30/30'} alt="..." className="message-avatar" />
+        <span className="message-username">{this.props.model.get('username') ? this.props.model.get('username') : 'Anonymous'}</span>
+        <span className="message-time-stamp">{formattedTime}</span>
         <p className="message-content">{this.props.model.get('content')}</p>
       </div>
     );
@@ -156,6 +172,7 @@ var UsernameFormComponent = React.createClass({
 
     var currentUserName = this.state.username;
     this.props.currentUser.set({username: currentUserName});
+    sessionStorage.setItem('username', this.state.username);
     console.log(this.props.currentUser);
     Backbone.history.navigate('message-view/', {trigger:true});
   },
