@@ -43,6 +43,10 @@ body{
   background-size: cover;
 }
 
+.container{
+  width: 980px;
+}
+
 .form-control, .btn{
   font-family: 'champagne';
 }
@@ -93,12 +97,16 @@ body{
 
 .user-info-container{
   height: 100%;
+  background-color: lighten($yellow, 30%);
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+
   .user-avatar{
     display: block;
     height: 250px;
-    margin-top: 15px;
+    margin: 0 auto 15px auto;
     border-radius: 8px;
-    
   }
   .username-main{
     font-family: 'harry';
@@ -109,11 +117,19 @@ body{
     1px -1px 0 $yellow,
     -1px 1px 0 $yellow,
     1px 1px 0 $yellow;
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 0;
   }
 }
 
-.message-container{
-  background-color: rgba(250, 233, 189, .4)
+#messages-window{
+  height: 85vh;
+  overflow: scroll;
+  margin-top: 10px;
+  border: 2px solid $darkRed;
+  background-color: lighten($yellow, 30%);
+  border-radius: 5px;
 }
 
 .message{
@@ -137,7 +153,7 @@ body{
     font-family: 'harry';
   }
   .message-time-stamp{
-    color: white;
+    color: $darkRed;
     margin-left: 8px;
     margin-right: 15px;
     font-family: 'champagne';
@@ -150,6 +166,25 @@ body{
     padding: 12px 8px;
     margin: 10px;
     border-radius: 5px;
+  }
+}
+
+.message-form{
+  position: fixed;
+  bottom: 10px;
+  right: 14px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 5px;
+
+  #message-input{
+    width: 500px;
+    margin-right: 4px;
+    background-color: lighten($yellow, 30%);
+  }
+
+  .btn{
+    display: inline-block;
   }
 }
 

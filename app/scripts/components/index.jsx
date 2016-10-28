@@ -14,12 +14,13 @@ var AppComponent = React.createClass({
 
     messageBoard.fetch().then(function(){
       self.setState({collection: messageBoard});
+      self.scrollToBottom();
 
       setInterval(function(){
         messageBoard.fetch().then(function(){
-          self.setState({collection: messageBoard})
+          self.setState({collection: messageBoard});
         });
-      },30000);
+      },3000);
     });
 
     return {
@@ -30,6 +31,15 @@ var AppComponent = React.createClass({
     this.state.collection.create(messageModel);
     this.state.collection.sort();
     this.setState({collection: this.state.collection});
+  },
+  scrollToBottom: function(){
+    console.log('scroll');
+    var messagesViewWindow = document.getElementById('messages-window');
+    messagesViewWindow.scrollTop = messagesViewWindow.scrollHeight;
+  },
+  componentWillUpdate: function(){
+    var messagesViewWindow = document.getElementById('messages-window');
+    this.shouldScrollBottom = messagesViewWindow.scrollTop + messagesViewWindow.offsetHeight === messagesViewWindow.scrollHeight;
   },
   render: function(){
     var messageList = this.state.collection.map(function(message){
@@ -46,13 +56,15 @@ var AppComponent = React.createClass({
         <div className="row">
           <UserInfoComponent username={/*this.props.currentUser.get('username')*/sessionStorage.getItem('username')}/>
           <div className="col-md-9 message-container">
-            <div className="row messages-window">
-              {messageList}
+            <div className="col-md-12">
+              <div className="row" id="messages-window">
+                {messageList}
+              </div>
             </div>
             <div className="message-input">
               <InputComponent
                 collection={this.state.collection}
-                username={/*this.props.currentUser.get('username')*/sessionStorage.getItem('username')}
+                username={sessionStorage.getItem('username')}
                 addMessage={this.addMessage}
               />
             </div>
@@ -60,6 +72,11 @@ var AppComponent = React.createClass({
         </div>
       </div>
     );
+  },
+  componentDidUpdate: function(){
+    if(this.shouldScrollBottom){
+      this.scrollToBottom();
+    }
   }
 });
 
@@ -75,13 +92,14 @@ var UserInfoComponent = React.createClass({
 });
 
 var MessageComponent = React.createClass({
+  /*http://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript*/
   msToTime: function(duration) {
     var milliseconds = parseInt((duration%1000)/100)
         , seconds = parseInt((duration/1000)%60)
         , minutes = parseInt((duration/(1000*60))%60)
         , hours = parseInt((duration/(1000*60*60))%24);
 
-    hours = (hours < 10) ? "0" + hours : hours;
+    hours = (hours < 10) ? "0" + hours-4 : hours-4;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
@@ -130,7 +148,7 @@ var InputComponent = React.createClass({
   },
   render: function(){
     return(
-      <form className="form-inline" onSubmit={this.handleSubmit}>
+      <form className="form-inline message-form" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <input onChange={this.handleContent} ref="message" type="text" className="form-control" value={this.state.content} name="message-input" id="message-input" placeholder="Your message here..." />
         </div>
